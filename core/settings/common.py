@@ -52,7 +52,9 @@ DJANGO_DEFAULT_APPS = (
 
 LOCAL_APPS = (
     "stats",
-    "django_extensions"
+    "django_extensions",
+    "django_crontab",
+    "rest_framework",
 )
 
 

@@ -1,5 +1,5 @@
-from datetime import datetime
 from os.path import join
+import os
 
 from .common import *
 from .environment import env
@@ -26,6 +26,9 @@ DATABASES = {
 # ##### APPLICATION CONFIGURATION #########################
 INSTALLED_APPS = DEFAULT_APPS
 
+DATE_INPUT_FORMATS = ["%d/%m/%Y"]
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SENDGRID_API_KEY = env("SENDGRID_API_KEY", default="API_KEY")
 EMAIL_USE_TLS = True
@@ -34,3 +37,14 @@ EMAIL_HOST_USER = "apikey"
 EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
 EMAIL_PORT = 587
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+SITE_ID = 1
+
+CRONTAB_LOCK_JOBS = True
+CRONJOBS = [
+    (
+        "* * * * *",
+        "stats.workers.pull_orders.puller_initiator",
+        ">> " + os.path.join(PROJECT_ROOT, "logs/cron_debug.log" + " 2>&1 "),
+    ),
+]

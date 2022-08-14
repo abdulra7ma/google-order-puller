@@ -12,7 +12,10 @@ class EmailThread(threading.Thread):
 
     def run(self):
         msg = EmailMessage(
-            self.subject, body=self.html_content, to=[self.recipient_list], from_email="te734793@gmail.com"
+            self.subject,
+            body=self.html_content,
+            to=[self.recipient_list],
+            from_email="te734793@gmail.com",
         )
         msg.content_subtype = "html"
         msg.send()

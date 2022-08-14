@@ -7,7 +7,7 @@ class ModelConstants:
     FIRST_NAME = "First name (as shown in ID)"
     MIDDLE_NAME = "Middle name (as shown in ID)"
     SURNAME = "Surname (as shown in ID)"
-    PHONE_NUMBER =""
+    PHONE_NUMBER = ""
     BIRTHDAY = ""
     CITY = ""
     IS_ACTIVE = "Account Activation status"

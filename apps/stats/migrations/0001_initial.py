@@ -23,8 +23,14 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("number", models.PositiveIntegerField(verbose_name="заказ №")),
-                ("usd_price", models.PositiveIntegerField(verbose_name="стоимость($)")),
+                (
+                    "number",
+                    models.PositiveIntegerField(verbose_name="заказ №"),
+                ),
+                (
+                    "usd_price",
+                    models.PositiveIntegerField(verbose_name="стоимость($)"),
+                ),
                 (
                     "ruble_price",
                     models.PositiveIntegerField(verbose_name="стоимость(rub)"),
@@ -55,13 +61,16 @@ class Migration(migrations.Migration):
                 (
                     "exchange_date",
                     models.DateField(
-                        default=datetime.date(2022, 8, 12), verbose_name="Exchange Date"
+                        default=datetime.date(2022, 8, 12),
+                        verbose_name="Exchange Date",
                     ),
                 ),
                 (
                     "exchange_amount",
                     models.DecimalField(
-                        decimal_places=2, max_digits=16, verbose_name="Exchange Amount"
+                        decimal_places=2,
+                        max_digits=16,
+                        verbose_name="Exchange Amount",
                     ),
                 ),
             ],

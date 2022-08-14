@@ -11,6 +11,10 @@ django-extensions = "*"
 django-environ = "*"
 psycopg2 = "*"
 gspread = "*"
+xmltodict = "*"
+requests = "*"
+django-crontab = "*"
+djangorestframework = "*"
 
 [dev-packages]
 black = "*"

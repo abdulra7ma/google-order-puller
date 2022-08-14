@@ -23,9 +23,16 @@ def send_student_notification_email(student, teacher, student_class):
     """
 
     email_body = (
-        "Hi " + student.full_name + ", You have been add to the " + student_class + " class by the teacher" + teacher
+        "Hi "
+        + student.full_name
+        + ", You have been add to the "
+        + student_class
+        + " class by the teacher"
+        + teacher
     )
 
-    send_mail(subject="School Nnotification", to=student.email, email_body=email_body)
+    send_mail(
+        subject="School Nnotification", to=student.email, email_body=email_body
+    )
 
     return True
