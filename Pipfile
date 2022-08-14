@@ -15,6 +15,7 @@ xmltodict = "*"
 requests = "*"
 django-crontab = "*"
 djangorestframework = "*"
+drf-yasg = "*"
 
 [dev-packages]
 black = "*"

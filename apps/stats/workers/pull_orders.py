@@ -3,13 +3,17 @@ from os.path import join
 
 import gspread
 from django.conf import settings
-from stats.models import Order, RublePrice
+from stats.models import Order
 from stats.services.order import create_orders, delete_orders, update_orders
 
 
 def initiate_work_spreedsheet(
     credentials_file, main_sheet, working_sheet
 ) -> gspread.Worksheet:
+    """
+    Инициировать клиент Google SpreadSheet и вернуть объект Worksheet
+    """
+
     client = gspread.service_account(credentials_file)
     sheet = client.open(main_sheet)
     return sheet.worksheet(working_sheet)
@@ -59,6 +63,11 @@ def orders_puller(work_sheet: gspread.Worksheet) -> None:
 
 
 def puller_initiator() -> None:
+    """
+    Функция задания Cron, которая инициирует рабочий лист и передает его функции orders_pullers.
+    Работает: каждые две минуты
+    """
+
     wk_sheet = initiate_work_spreedsheet(
         credentials_file=join(
             settings.CORE_APP,

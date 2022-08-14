@@ -55,6 +55,7 @@ LOCAL_APPS = (
     "django_extensions",
     "django_crontab",
     "rest_framework",
+    "drf_yasg"
 )
 
 

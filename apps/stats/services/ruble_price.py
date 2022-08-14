@@ -1,28 +1,17 @@
 from datetime import date
 
 from django.db import transaction
-
-from datetime import date
-
 from stats.models import RublePrice
-
-from stats.utils.currency import get_usd_ruble_today_exchange
-
-
-def get_ruble_price_object(curreny_code: int) -> RublePrice:
-    try:
-        ruble_price = RublePrice.objects.get(
-            currency_exchange_code=curreny_code
-        )
-    except RublePrice.DoesNotExist:
-        raise ValueError
-    return ruble_price
+from stats.selectors import ruble_price_object
 
 
 @transaction.atomic
 def create_ruble_price_instance(
     *, currency_code, exchange_date, exchange_amount
 ):
+    """
+    Create RubliePrice object
+    """
     ruble_price = RublePrice(
         currency_exchange_code=currency_code,
         exchange_date=exchange_date,
@@ -34,42 +23,16 @@ def create_ruble_price_instance(
 
 @transaction.atomic
 def update_ruble_price(*, currency_code, exchange_date, new_amount):
-    ruble_price = get_ruble_price_object(currency_code)
+    """
+    Update RubliePrice object
+    """
+    ruble_price = ruble_price_object(currency_code)
 
     ruble_price.exchange_date = (
-        exchange_date
-        if exchange_date is not None
-        else date.today().isoformat("%d/%m/%Y")
+        exchange_date if exchange_date is not None else date.today()
     )
     ruble_price.exchange_amount = new_amount
 
     ruble_price.save(update_fields=["exchange_date", "exchange_amount"])
 
     return ruble_price
-
-
-def get_today_usd_ruble_price():
-    rub_instance = RublePrice.objects.filter(
-        exchange_date=date.today(), currency_exchange_code="USD"
-    )
-
-    if rub_instance.exists():
-        return rub_instance.first().exchange_amount
-
-    newly_requested_price = get_usd_ruble_today_exchange()
-
-    if RublePrice.objects.filter(currency_exchange_code="USD").exists():
-        update_ruble_price(
-            currency_code="USD",
-            exchange_date=date.today().strftime("%d/%m/%Y"),
-            new_amount=newly_requested_price,
-        )
-        return newly_requested_price
-
-    create_ruble_price_instance(
-        currency_code="USD",
-        exchange_date=date.today(),
-        exchange_amount=newly_requested_price,
-    )
-
-    return newly_requested_price
