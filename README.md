@@ -1,7 +1,7 @@
-# School Site
+# Orders Puller
 
 ## Table of contents
-- [School Site](#school-site)
+- [Orders Puller](#orders-puller)
   - [Table of contents](#table-of-contents)
   - [Setup](#setup)
   - [APP-LOGIC](#app-logic)
@@ -23,19 +23,22 @@ pipenv shell
 ```
 
 ## APP-LOGIC
-Simple school system where a teacher could add/edit/delete a student
+Проект для извлечения сведений о заказах из электронной таблицы Google и представления данных в виде красивого графика.
 
 ### Main features
-1. notify student by email after been added to one class
-2. teacher is able to login by phone number
+1. Запуск работы, которая извлекает данные из таблицы Google каждые две минуты и сохраняет их в базе данных.
 
 ## run in dev environment
 
-1. migrate database
+1. migrate to database
 ```
 python manange.py migrate
 ```
-2. run development server
+2. add cron task
+```
+python manage.py crontab add
+```
+3. run development server
 ```
 python manange.py runserver
 ```
@@ -44,11 +47,11 @@ python manange.py runserver
 ## Run it with docker
 1. docker compose up
 ```
-docker-compose --file docker-compose-local.yml --project-name=school_site up
+docker-compose --file docker-compose-local.yml --project-name=orders_puller up
 ```
 2. docker compose down
 ```
-docker-compose --file docker-compose-local.yml --project-name=school_site down
+docker-compose --file docker-compose-local.yml --project-name=orders_puller down
 ```
 
 ## run test files
