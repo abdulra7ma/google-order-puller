@@ -37,7 +37,7 @@ def orders_puller(work_sheet: gspread.Worksheet) -> None:
                 {"order_number": order["заказ №"], "order_data": order}
             )
         else:
-            print("Creating new someting", order["заказ №"])
+            print("Created new order -> order number:", order["заказ №"])
             create_objests.append(order)
 
         create_update_orders_numbers.append(order["заказ №"])
@@ -58,6 +58,8 @@ def orders_puller(work_sheet: gspread.Worksheet) -> None:
     if len(delete_recorders) > 1:
         # delete orders
         delete_orders(delete_recorders)
+
+    print("finished")
 
     return
 

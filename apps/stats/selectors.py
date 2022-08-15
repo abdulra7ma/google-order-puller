@@ -1,45 +1,6 @@
 from datetime import date
 
 from stats.models import Order, RublePrice
-from stats.services.ruble_price import (
-    create_ruble_price_instance,
-    update_ruble_price,
-)
-from stats.utils.currency import get_usd_ruble_today_exchange
-
-
-def get_today_usd_ruble_price():
-    """
-    Получите сегодняшнюю цену обмена доллара США на рубль,
-    если нет сделать запрос в ЦБ РФ и создать/обновить объект PriceRuble
-
-    Returns:
-        -> newly_requested_price (float)
-    """
-
-    rub_instance = RublePrice.objects.filter(
-        exchange_date=date.today(), currency_exchange_code="USD"
-    )
-
-    if rub_instance.exists():
-        return rub_instance.first().exchange_amount
-
-    newly_requested_price = get_usd_ruble_today_exchange()
-    if RublePrice.objects.filter(currency_exchange_code="USD").exists():
-        update_ruble_price(
-            currency_code="USD",
-            exchange_date=date.today(),
-            new_amount=newly_requested_price,
-        )
-        return newly_requested_price
-
-    create_ruble_price_instance(
-        currency_code="USD",
-        exchange_date=date.today(),
-        exchange_amount=newly_requested_price,
-    )
-
-    return newly_requested_price
 
 
 def order_object(order_number: int) -> Order:
@@ -50,11 +11,12 @@ def order_object(order_number: int) -> Order:
         -> order (Order)
     """
 
-    try:
-        order = Order.objects.get(number=order_number)
-    except Order.DoesNotExist:
-        raise ValueError
-    return order
+    order = Order.objects.filter(number=order_number)
+
+    if order.exists():
+        return order.first()
+        
+    raise ValueError
 
 
 def ruble_price_object(curreny_code: int) -> RublePrice:

@@ -7,7 +7,8 @@ from typing import List, Set
 from django.db import transaction
 from django.db.models import QuerySet
 from stats.models import Order
-from stats.selectors import get_today_usd_ruble_price, order_object
+from stats.selectors import order_object
+from stats.services.ruble_price import get_today_usd_ruble_price
 
 from .utils import convert_date
 

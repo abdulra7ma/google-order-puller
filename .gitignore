@@ -115,7 +115,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 # React
-# from https://github.com/facebook/react/blob/master/.gitignore
 .DS_STORE
 ._*
 node_modules
@@ -152,8 +151,6 @@ packages/react-devtools-extensions/shared/build
 packages/react-devtools-inline/dist
 packages/react-devtools-shell/dist
 react_app/public/runtime-config.js
-
-
 
 deployment
 

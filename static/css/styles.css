@@ -1,8 +1,32 @@
-html,
-body,
-#container {
+.container {
+    display: flex;
+    align-items: stretch;
+    width: 100vw;
+}
+
+.col-1 {
+    flex-direction: column;
+}
+
+.col-2 {
+    flex-direction: row;
+}
+
+.total {
+    flex-direction: column;
+}
+
+.total h1 {
+    width: 120px;
+}
+
+.table {
+    flex-direction: column;
+}
+
+#chart-container {
     width: 800px;
-    height: 400px;
+    height: 600px;
     margin: 0;
     padding: 0;
 }

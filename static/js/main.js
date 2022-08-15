@@ -1,5 +1,6 @@
 $(document).ready(async function () {
     await addTotal("total-value");
+    await addColumns();
 });
 
 anychart.onDocumentReady(async function () {
@@ -36,7 +37,7 @@ anychart.onDocumentReady(async function () {
     chart.legend().enabled(true);
 
     // set the container id for the line chart
-    chart.container("container");
+    chart.container("chart-container");
 
     // draw the line chart
     chart.draw();
@@ -70,5 +71,23 @@ async function getOrders() {
 async function addTotal(variable) {
     var s = document.getElementById(variable);
     s.innerHTML = await getTotal();
+
+};
+
+async function addColumns() {
+    var table_body = document.getElementById("table-body");
+    var data = await getOrders();
+    let items = data.data;
+
+    for (let i = 1; i < 11; i++) {
+        table_body.innerHTML += (
+            "<tr>" +
+            "<td>" + i + "</td>" +
+            "<td>" + items[i].number + "</td>" +
+            "<td>" + items[i].usd_price + "</td>" +
+            "<td>" + items[i].date + "</td>" +
+            "</tr>"
+        )
+    };
 
 };

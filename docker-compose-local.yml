@@ -2,8 +2,8 @@ version: '3.7'
 services:
   database:
     environment:
-      POSTGRES_DB: schoolsite_db
-      POSTGRES_PASSWORD: schoolsite_db_password_1
+      POSTGRES_DB: orders_puller_db
+      POSTGRES_PASSWORD: orders_puller_db_password_1
     image: postgres:14.1
     ports:
       - 127.0.0.1:5432:5432/tcp
@@ -12,16 +12,21 @@ services:
       - pg_data:/var/lib/postgresql/data:rw
   web:
     build: .
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "service cron start && python manage.py crontab add && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
       - "8000:8000"
     environment:
       - DEBUG=True
-      - CORE_DATABASE_URL=psql://postgres:schoolsite_db_password_1@database:5432/schoolsite_db
-      - SENDGRID_API_KEY=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
+      - CORE_DATABASE_URL=psql://postgres:orders_puller_db_password_1@database:5432/orders_puller_db
     depends_on:
       - database
+  cron:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - database
+    command: cron -f
 volumes:
   pg_data: {}
