@@ -36,7 +36,3 @@ WORKDIR /home/user/code/
 RUN mkdir logs
 COPY . .
 
-# RUN chmod 644 /etc/crontab 
-RUN chmod +x ./docker-entrypoint.sh
-
-RUN ./docker-entrypoint.sh

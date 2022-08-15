@@ -12,7 +12,7 @@ services:
       - pg_data:/var/lib/postgresql/data:rw
   web:
     build: .
-    command: sh -c "service cron start && python manage.py crontab add && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "service cron start /&& python manage.py crontab add && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -22,11 +22,5 @@ services:
       - CORE_DATABASE_URL=psql://postgres:orders_puller_db_password_1@database:5432/orders_puller_db
     depends_on:
       - database
-  cron:
-    build: .
-    restart: unless-stopped
-    depends_on:
-      - database
-    command: cron -f
 volumes:
   pg_data: {}
