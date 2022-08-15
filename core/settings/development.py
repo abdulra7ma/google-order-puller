@@ -1,5 +1,5 @@
-from os.path import join
 import os
+from os.path import join
 
 from .common import *
 from .environment import env
